@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.25rem;
+
+    /* Dark cinematic palette — always dark */
+    --background: 0.09 0.004 265;
+    --foreground: 0.9 0.025 78;
+    --card: 0.11 0.004 265;
+    --card-foreground: 0.9 0.025 78;
+    --popover: 0.13 0.004 265;
+    --popover-foreground: 0.9 0.025 78;
+    --primary: 0.7 0.115 55;
+    --primary-foreground: 0.09 0.004 265;
+    --secondary: 0.14 0.004 265;
+    --secondary-foreground: 0.9 0.025 78;
+    --muted: 0.14 0.004 265;
+    --muted-foreground: 0.6 0.018 60;
+    --accent: 0.7 0.115 55;
+    --accent-foreground: 0.09 0.004 265;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.2 0.005 265;
+    --input: 0.18 0.005 265;
+    --ring: 0.7 0.115 55;
+
+    --chart-1: 0.7 0.115 55;
+    --chart-2: 0.6 0.118 184;
+    --chart-3: 0.4 0.07 227;
+    --chart-4: 0.83 0.189 84;
+    --chart-5: 0.77 0.188 70;
+
+    --sidebar: 0.09 0.004 265;
+    --sidebar-foreground: 0.9 0.025 78;
+    --sidebar-primary: 0.7 0.115 55;
+    --sidebar-primary-foreground: 0.09 0.004 265;
+    --sidebar-accent: 0.14 0.004 265;
+    --sidebar-accent-foreground: 0.9 0.025 78;
+    --sidebar-border: 0.2 0.005 265;
+    --sidebar-ring: 0.7 0.115 55;
+
+    /* Custom portfolio tokens */
+    --amber: 0.7 0.115 55;
+    --amber-light: 0.75 0.12 58;
+    --ivory: 0.9 0.025 78;
+    --warm-gray: 0.72 0.02 60;
+    --dim-gray: 0.58 0.015 55;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "GeneralSans", "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Film grain overlay */
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-2%, -3%);
+  }
+  20% {
+    transform: translate(3%, 2%);
+  }
+  30% {
+    transform: translate(-1%, 4%);
+  }
+  40% {
+    transform: translate(4%, -1%);
+  }
+  50% {
+    transform: translate(-3%, 1%);
+  }
+  60% {
+    transform: translate(2%, -4%);
+  }
+  70% {
+    transform: translate(-4%, 3%);
+  }
+  80% {
+    transform: translate(1%, -2%);
+  }
+  90% {
+    transform: translate(-2%, 4%);
+  }
+}
+
+.film-grain::after {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  animation: grain 0.5s steps(1) infinite;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Vignette */
+.vignette::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    oklch(0.05 0.004 265 / 0.6) 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Serif display font utility */
+.font-display {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+/* Amber accent */
+.text-amber {
+  color: oklch(var(--amber));
+}
+.border-amber {
+  border-color: oklch(var(--amber));
+}
+.bg-amber {
+  background-color: oklch(var(--amber));
+}
+
+/* Section padding rhythm */
+.section-pad {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .section-pad {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* Eyebrow label */
+.eyebrow {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(var(--amber));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.09 0.004 265);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.22 0.005 265);
+  border-radius: 2px;
+}
